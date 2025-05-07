@@ -8,7 +8,7 @@
 
 A convolutional neural network implementation using TensorFlow to classify images of cats and dogs. This project demonstrates multiphase image classification development, from basic models to advanced techniques including data augmentation and transfer learning.
 
-![Cats vs Dogs Examples](https://storage.googleapis.com/kaggle-competitions/kaggle/3362/media/woof_meow.jpg)
+![Cats vs Dogs Examples](cats-vs-dogs-examples.png)
 
 ---
 
