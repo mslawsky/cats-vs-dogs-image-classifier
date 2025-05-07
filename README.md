@@ -8,7 +8,7 @@
 
 A convolutional neural network implementation using TensorFlow to classify images of cats and dogs. This project demonstrates multiphase image classification development, from basic models to advanced techniques including data augmentation and transfer learning.
 
-![Cats vs Dogs Examples](https://storage.googleapis.com/kaggle-competitions/kaggle/3362/media/woof_meow.jpg)
+![Cats vs Dogs Examples](cats-vs-dogs-examples.jpg)
 
 ---
 
@@ -20,6 +20,7 @@ A convolutional neural network implementation using TensorFlow to classify image
 - [Data Augmentation](#data-augmentation-)
 - [Transfer Learning](#transfer-learning-)
 - [Results](#results-)
+- [Real-World Testing](#real-world-testing-%EF%B8%8F)
 - [Installation & Usage](#installation--usage-)
 - [Key Learnings](#key-learnings-)
 - [Future Improvements](#future-improvements-)
@@ -213,6 +214,29 @@ def create_transfer_learning_model():
 
 ---
 
+## Results 📈 
+
+Performance comparison across the three phases:
+
+| Model Phase | Training Accuracy | Validation Accuracy | Training Time | Parameters |
+|-------------|-------------------|---------------------|---------------|------------|
+| Basic CNN   | 92.3%             | 80.5%               | ~20 min       | 1.8M       |
+| With Augmentation | 89.1%       | 85.7%               | ~30 min       | 1.8M       |
+| Transfer Learning | 94.5%       | 93.2%               | ~15 min       | 14.7M      |
+
+**Key Observations:**
+- **Basic CNN**: Shows signs of overfitting (high training accuracy, lower validation accuracy)
+- **Data Augmentation**: Reduces overfitting and improves generalization
+- **Transfer Learning**: Provides the best performance with faster training time
+
+**Visualization:**
+
+![Training History Comparison](training-comparison.png)
+
+The graph illustrates how data augmentation helps reduce the gap between training and validation accuracy, while transfer learning achieves the highest overall performance.
+
+---
+
 ## Real-World Testing ⚒️
 
 To evaluate the model's performance on diverse, real-world images, I tested the final transfer learning model with three different images:
@@ -273,10 +297,6 @@ image_path = "test_images/grumpy_cat.jpg"
 class_name, confidence = predict_image(image_path, model)
 print(f"Prediction: {class_name} with {confidence:.1f}% confidence")
 ```
-
----y Comparison](training-comparison.png)
-
-The graph illustrates how data augmentation helps reduce the gap between training and validation accuracy, while transfer learning achieves the highest overall performance.
 
 ---
 
@@ -366,19 +386,11 @@ Potential enhancements for this project:
 ## Contact 📫 
 
 For inquiries about this project:
-- [LinkedIn Profile](https://www.linkedin.com/in/yourname/)
-- [Portfolio](https://yourportfolio.com)
-- [GitHub](https://github.com/yourusername)
-- [Email](mailto:your.email@example.com)
+- [LinkedIn Profile](https://www.linkedin.com/in/melissaslawsky/)
+- [Client Results](https://melissaslawsky.com/portfolio/)
+- [Tableau Portfolio](https://public.tableau.com/app/profile/melissa.slawsky1925/vizzes)
+- [Email](mailto:melissa@melissaslawsky.com)
 
 ---
 
-<p align="center">
-  Made with ❤️ by <a href="https://github.com/yourusername">Your Name</a>
-</p>
-
-<p align="center">
-  <a href="#cats-vs-dogs-image-classifier-">Back to top</a>
-</p>
-
-© 2025 Your Name. All Rights Reserved.
+© 2025 Melissa Slawsky. All Rights Reserved.
