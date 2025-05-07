@@ -249,14 +249,14 @@ To evaluate the model's performance on diverse, real-world images, I tested the 
 **Observation:** The model confidently identified this famous internet cat meme despite the unique facial expression.
 
 ### Test Case 2: Chihuahua
-![Chihuahua](chihuahua_test.jpg)
+![Chihuahua](chihuahua-test.jpg)
 
 **Prediction:** Dog (98.2% confidence)  
 **Result:** ✅ Correctly identified  
 **Observation:** The model correctly classified this small dog breed, demonstrating robustness across different dog sizes and breeds.
 
 ### Test Case 3: Cockatiel (Out-of-Distribution Test)
-![Cockatiel](cockatiel_test.png)
+![Cockatiel](cockatiel-test.png)
 
 **Prediction:** Cat (72.4% confidence)  
 **Result:** ❓ Misclassified, but understandably  
