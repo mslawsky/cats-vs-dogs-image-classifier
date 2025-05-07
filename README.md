@@ -8,7 +8,7 @@
 
 A convolutional neural network implementation using TensorFlow to classify images of cats and dogs. This project demonstrates multiphase image classification development, from basic models to advanced techniques including data augmentation and transfer learning.
 
-![Cats vs Dogs Examples](cats-vs-dogs-examples.jpg)
+![Cats vs Dogs Examples](cats-vs-dogs-examples.png)
 
 ---
 
@@ -235,6 +235,20 @@ Performance comparison across the three phases:
 
 The graph illustrates how data augmentation helps reduce the gap between training and validation accuracy, while transfer learning achieves the highest overall performance.
 
+### CNN Feature Extraction Visualization
+
+The following image demonstrates the journey an input image takes through the convolutional layers, showing how the network progressively extracts features:
+
+![CNN Layers Visualization](image-journey.png)
+
+This visualization shows:
+- **Input Image**: Original 150x150 pixel image (cat or dog)
+- **Conv Layer 1**: After first convolution and max pooling (75x75)
+- **Conv Layer 2**: After second convolution and max pooling (37x37)
+- **Conv Layer 3**: After third convolution and max pooling (18x18)
+
+As the image progresses through the layers, the spatial dimensions decrease while the feature maps capture increasingly abstract representations. The final layer outputs are flattened and fed to dense layers for classification.
+
 ---
 
 ## Real-World Testing ⚒️
@@ -392,5 +406,8 @@ For inquiries about this project:
 - [Email](mailto:melissa@melissaslawsky.com)
 
 ---
+
+© 2025 Melissa Slawsky. All Rights Reserved.
+
 
 © 2025 Melissa Slawsky. All Rights Reserved.
