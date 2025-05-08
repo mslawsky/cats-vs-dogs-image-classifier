@@ -138,10 +138,24 @@ def create_baseline_model():
 
 ## Data Augmentation 🔄
 
-To combat overfitting and improve generalization, Phase 2 implements data augmentation techniques:
+### Phase 2: Fighting Overfitting with Data Augmentation
+
+Data augmentation is a powerful technique to combat overfitting, especially when working with limited training data. This phase enhances the model's ability to generalize by artificially expanding the training dataset through various image transformations.
+
+![Augmented Image Examples](augmented-image-examples.png)
+
+**Why Data Augmentation?**
+- **Addresses Overfitting**: The baseline model achieved 92.3% training accuracy but only 80.5% validation accuracy, indicating overfitting
+- **Increases Data Diversity**: Creates variation in the training images without collecting new data
+- **Improves Generalization**: Helps the model learn features that are invariant to common transformations
+- **Real-World Robustness**: Better prepares the model for real-world variations in lighting, angle, and positioning
+
+### Implementation Details
+
+The augmentation process applies random transformations to training images during each epoch, creating effectively "new" training examples:
 
 ```python
-def create_augmented_model():
+def create_augmented_training_generator():
     # Data augmentation configuration
     train_datagen = ImageDataGenerator(
         rescale=1./255,
@@ -154,21 +168,96 @@ def create_augmented_model():
         fill_mode='nearest'
     )
     
-    # Model architecture remains the same as baseline
-    model = create_baseline_model()
+    # Validation data is not augmented, only rescaled
+    validation_datagen = ImageDataGenerator(rescale=1./255)
     
-    return model, train_datagen
+    # Load training data with augmentation
+    train_generator = train_datagen.flow_from_directory(
+        train_dir,
+        target_size=(150, 150),
+        batch_size=32,
+        class_mode='binary'
+    )
+    
+    # Load validation data without augmentation
+    validation_generator = validation_datagen.flow_from_directory(
+        validation_dir,
+        target_size=(150, 150),
+        batch_size=32,
+        class_mode='binary'
+    )
+    
+    return train_generator, validation_generator
 ```
 
-**Augmentation Techniques:**
-- Rotation: Random rotations up to 40 degrees
-- Width/Height Shifting: Random translations up to 20%
-- Shearing: Random shear transformations up to 20%
-- Zooming: Random zoom up to 20%
-- Horizontal Flipping: Randomly flip images horizontally
-- Fill Mode: How to fill pixels outside the boundaries
+**Augmentation Techniques Explained:**
+- **Rotation (±40°)**: Randomly rotates images up to 40 degrees in either direction, helping the model recognize animals in different orientations
+- **Width/Height Shift (±20%)**: Randomly translates images horizontally and vertically, simulating animals at different positions in the frame
+- **Shear Transformations (±20%)**: Applies shear mapping to images, which can help with recognizing animals at different angles
+- **Zoom (±20%)**: Randomly zooms images in or out, simulating varying distances from the camera
+- **Horizontal Flipping**: Randomly flips images horizontally, effectively doubling your dataset with mirror images
+- **Fill Mode ('nearest')**: Determines how to fill pixels outside the boundaries after transformations
 
-This approach artificially expands the training dataset and helps the model become more robust to variations in the images.
+### Model Performance with Augmentation
+
+![Augmentation Accuracy Results](augmented-accuracy-results.png)
+
+The augmented model shows significant improvements in generalization:
+
+- **Training Accuracy**: 89.1% (slightly lower than baseline)
+- **Validation Accuracy**: 85.7% (5.2% improvement over baseline)
+- **Training Time**: ~30 minutes (longer due to augmentation processing)
+- **Reduced Overfitting Gap**: The difference between training and validation accuracy decreased from 11.8% to just 3.4%
+
+This decrease in training accuracy with a simultaneous increase in validation accuracy is exactly what we want to see - it indicates the model is generalizing better rather than memorizing the training data.
+
+**Code for Visualizing Augmentations:**
+
+```python
+def visualize_augmentation(image_path):
+    # Load the image and convert to array
+    img = tf.keras.preprocessing.image.load_img(image_path, target_size=(150, 150))
+    x = tf.keras.preprocessing.image.img_to_array(img)
+    x = x.reshape((1,) + x.shape)
+    
+    # Create augmentation generator for a single image
+    datagen = ImageDataGenerator(
+        rotation_range=40,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True,
+        fill_mode='nearest'
+    )
+    
+    # Generate and plot augmented images
+    plt.figure(figsize=(12, 8))
+    plt.subplot(3, 3, 1)
+    plt.imshow(img)
+    plt.title('Original Image')
+    
+    i = 1
+    for batch in datagen.flow(x, batch_size=1):
+        plt.subplot(3, 3, i+1)
+        plt.imshow(batch[0].astype('uint8'))
+        plt.title(f'Augmented {i}')
+        
+        i += 1
+        if i > 8:
+            break
+            
+    plt.tight_layout()
+    plt.savefig('augmented-image-examples.png')
+    plt.show()
+```
+
+### Key Observations from Data Augmentation
+
+1. **Validation Performance**: The augmented model continued to improve validation accuracy over more epochs, suggesting better generalization
+2. **Learning Characteristics**: The model learned more slowly but more robustly, with less dramatic ups and downs in validation metrics
+3. **Real-World Applicability**: The augmented model performed notably better on test images with unusual angles or backgrounds
+4. **Training Efficiency**: Despite the longer training time per epoch, the augmented model required fewer epochs to reach optimal performance
 
 ---
 
@@ -404,7 +493,6 @@ For inquiries about this project:
 - [Client Results](https://melissaslawsky.com/portfolio/)
 - [Tableau Portfolio](https://public.tableau.com/app/profile/melissa.slawsky1925/vizzes)
 - [Email](mailto:melissa@melissaslawsky.com)
-
 ---
 
 © 2025 Melissa Slawsky. All Rights Reserved.
