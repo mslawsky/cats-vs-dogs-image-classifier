@@ -408,6 +408,3 @@ For inquiries about this project:
 ---
 
 © 2025 Melissa Slawsky. All Rights Reserved.
-
-
-© 2025 Melissa Slawsky. All Rights Reserved.
